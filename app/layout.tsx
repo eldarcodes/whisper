@@ -20,7 +20,12 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
-        <body className={cn(font.className, "bg-white dark:bg-[#313338]")}>
+        <body
+          className={cn(
+            font.className,
+            "bg-white dark:bg-[#313338] container mt-10"
+          )}
+        >
           <ThemeProvider
             attribute="class"
             defaultTheme="dark"
