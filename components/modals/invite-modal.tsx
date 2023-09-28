@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import axios from "axios";
 import { Check, Copy, RefreshCw } from "lucide-react";
 
 import {
@@ -14,10 +15,10 @@ import { useOrigin } from "@/hooks/use-origin";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import axios from "axios";
+import { cn } from "@/lib/utils";
 
 export const InviteModal = () => {
-  const { isOpen, onClose, type, data } = useModal();
+  const { isOpen, onOpen, onClose, type, data } = useModal();
   const origin = useOrigin();
 
   const isModalOpen = isOpen && type === "invite";
@@ -45,6 +46,7 @@ export const InviteModal = () => {
       const response = await axios.patch(
         `/api/servers/${server?.id}/invite-code`
       );
+
       onOpen("invite", { server: response.data });
     } catch (error) {
       console.log(error);
@@ -91,7 +93,9 @@ export const InviteModal = () => {
             onClick={onGenerate}
           >
             Generate a new link
-            <RefreshCw className="w-4 h-4 ml-2" />
+            <RefreshCw
+              className={cn("w-4 h-4 ml-2", isLoading && "animate-spin")}
+            />
           </Button>
         </div>
       </DialogContent>
