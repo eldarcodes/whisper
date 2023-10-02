@@ -5,6 +5,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { Loader2 } from "lucide-react";
 
 import {
   Dialog,
@@ -109,6 +110,8 @@ export const InitialModal = () => {
                           onChange={field.onChange}
                         />
                       </FormControl>
+
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -140,6 +143,7 @@ export const InitialModal = () => {
 
             <DialogFooter className="bg-gray-100 px-6 py-4">
               <Button disabled={isLoading} variant="primary">
+                {isLoading && <Loader2 className="animate-spin mr-2 w-4 h-4" />}
                 Create
               </Button>
             </DialogFooter>
