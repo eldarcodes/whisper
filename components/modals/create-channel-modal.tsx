@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import qs from "query-string";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -48,7 +49,7 @@ const formSchema = z.object({
 });
 
 export const CreateChannelModal = () => {
-  const { isOpen, onClose, type } = useModal();
+  const { isOpen, onClose, type, data } = useModal();
   const router = useRouter();
 
   const params = useParams();
@@ -59,9 +60,17 @@ export const CreateChannelModal = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      type: ChannelType.TEXT,
+      type: data.channelType || ChannelType.TEXT,
     },
   });
+
+  useEffect(() => {
+    if (data.channelType) {
+      form.setValue("type", data.channelType);
+    } else {
+      form.setValue("type", ChannelType.TEXT);
+    }
+  }, [data.channelType, form]);
 
   const isLoading = form.formState.isLoading;
 
