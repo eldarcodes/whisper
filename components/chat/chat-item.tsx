@@ -9,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Member, MemberRole, Profile } from "@prisma/client";
 import { Edit, FileIcon, ShieldAlert, ShieldCheck, Trash } from "lucide-react";
 import Image from "next/image";
+import { useRouter, useParams } from "next/navigation";
 
 import { UserAvatar } from "@/components/user-avatar";
 import { ActionTooltip } from "@/components/action-tooltip";
@@ -57,6 +58,9 @@ export const ChatItem = ({
 }: ChatItemProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
+  const params = useParams();
+  const router = useRouter();
+
   const { onOpen } = useModal();
 
   useEffect(() => {
@@ -98,6 +102,14 @@ export const ChatItem = ({
 
   const isLoading = form.formState.isSubmitting;
 
+  const onMemberClick = () => {
+    if (member.id === currentMember.id) {
+      return;
+    }
+
+    router.push(`/servers/${params?.serverId}/conversations/${member.id}`);
+  };
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const url = qs.stringifyUrl({
@@ -117,14 +129,20 @@ export const ChatItem = ({
   return (
     <div className="relative group flex items-center hover:bg-black/5 p-4 transition w-full">
       <div className="group flex gap-x-2 items-start w-full">
-        <div className="cursor-pointer hover:drop-shadow-md transition">
+        <div
+          className="cursor-pointer hover:drop-shadow-md transition"
+          onClick={onMemberClick}
+        >
           <UserAvatar src={member.profile.imageUrl} />
         </div>
 
         <div className="flex flex-col w-full">
           <div className="flex items-center gap-x-2">
             <div className="flex items-center">
-              <p className="font-semibold text-sm hover:underline cursor-pointer">
+              <p
+                className="font-semibold text-sm hover:underline cursor-pointer"
+                onClick={onMemberClick}
+              >
                 {member.profile.name}
               </p>
 
