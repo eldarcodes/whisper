@@ -52,7 +52,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(server);
   } catch (error) {
-    console.error("Channels POST error:", error);
+    console.error("[CHANNELS_POST]:", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
