@@ -86,7 +86,7 @@ export const ChatItem = ({
 
   useEffect(() => {
     form.reset({ content });
-  }, [content]);
+  }, [form, content]);
 
   const fileType = fileUrl?.split(".").pop();
 
