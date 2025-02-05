@@ -30,6 +30,7 @@ export const EmojiPicker = ({ onChange }: EmojiPickerProps) => {
       >
         <Picker
           theme={resolvedTheme}
+          previewPosition="none"
           data={data}
           onEmojiSelect={(emoji: any) => onChange(emoji.native)}
         />
